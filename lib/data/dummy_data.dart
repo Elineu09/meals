@@ -406,4 +406,4 @@ const dummyMeals = [
     isVegetarian: true,
     isLactoseFree: true,
   ),
-]; 
+];
