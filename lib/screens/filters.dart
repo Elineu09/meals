@@ -68,7 +68,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Column(
           children: [
             SwitchListTile(
-              value: _glutenFreeFilterSet,
+              value: _glutenFreeFilterSet, 
               onChanged: (isChecked) {
                 setState(() {
                   _glutenFreeFilterSet = isChecked;
