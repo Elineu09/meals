@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:meals/models/meal.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/providers/favorites_provider.dart';
 
 class MealDetailsScreen extends ConsumerWidget {
@@ -24,12 +24,12 @@ class MealDetailsScreen extends ConsumerWidget {
             onPressed: () {
               final wasAdded = ref
                   .read(favoriteMealsProvider.notifier)
-                  .toggleMealsFavoriteStatus(meal);
+                  .toggleMealFavoriteStatus(meal);
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                      wasAdded ? 'Meal added as a favorite' : 'Meal removed.'),
+                      wasAdded ? 'Meal added as a favorite.' : 'Meal removed.'),
                 ),
               );
             },
