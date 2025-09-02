@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:meals/models/meal.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/providers/favorites_provider.dart';
 
 class MealDetailsScreen extends ConsumerWidget {
@@ -24,26 +24,36 @@ class MealDetailsScreen extends ConsumerWidget {
             onPressed: () {
               final wasAdded = ref
                   .read(favoriteMealsProvider.notifier)
-                  .toggleMealsFavoriteStatus(meal);
+                  .toggleMealFavoriteStatus(meal);
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                      wasAdded ? 'Meal added as a favorite' : 'Meal removed.'),
+                      wasAdded ? 'Meal added as a favorite.' : 'Meal removed.'),
                 ),
               );
             },
-            icon: Icon(isFavorite ? Icons.star : Icons.star_border),
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1000),
+              transitionBuilder: (child, animation) => RotationTransition(
+                  turns: Tween<double>(begin: 0.9, end: 1).animate(animation),
+                  child: child),
+              child: Icon(isFavorite ? Icons.star : Icons.star_border,
+                  key: ValueKey(isFavorite)),
+            ),
           )
         ]),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network(
-                meal.imageUrl,
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              Hero(
+                tag: meal.id,
+                child: Image.network(
+                  meal.imageUrl,
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(height: 14),
               Text(
